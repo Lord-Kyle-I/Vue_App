@@ -1,0 +1,162 @@
+@use 'sass:color';
+
+//overrides
+$primary: #3B47CE;
+$success: rgb(2, 129, 0);
+$dark: #0B0014;
+
+
+@import "../node_modules/bootstrap/scss/functions";
+@import '../node_modules/bootstrap/scss/variables';
+
+
+$colors: (
+    "background": #EAE9E8,
+    "accent-emphasis": #667e74,
+    "accent": #A3C4B6,
+    "brand": #3A947D,
+);
+
+$background: map-get($map: $colors, $key: "background");
+$accent-emphasis: map-get($map: $colors, $key: "accent-emphasis");
+
+$theme-colors: map-merge($theme-colors, $colors);
+
+@import '../node_modules/bootstrap/scss/bootstrap.scss';
+
+@mixin custom-valid ($hidebg) {
+    transition-duration: 200ms;
+    border-color: $background;
+
+    @if $hidebg ==none {
+        background: none;
+    }
+
+    @content
+}
+
+
+.form-control, .form-check-input, .form-select {
+    border-color: $accent-emphasis;
+}
+
+
+.form-control {
+    @include form-validation-state-selector("valid") {
+        @include custom-valid(none);
+        padding: .375rem .75rem;
+    }
+}
+
+.form-check-input {
+    @include form-validation-state-selector("valid") {
+        @include custom-valid("");
+    }
+}
+
+
+.was-validated .form-select:valid:not([multiple]):not([size]) {
+    --bs-form-select-bg-icon: none;
+    padding: .375rem 2.25rem .375rem .75rem;
+    background-position: right .75rem center;
+    background-size: 16px 12px;
+
+    @include custom-valid("");
+}
+
+.libre-baskerville-brand {
+    font-family: "Libre Baskerville", serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+}
+
+html body {
+
+    header {
+        a.navbar-brand {
+            user-select: none;
+
+            &:active {
+                border: 5px solid color.mix($primary, white, 50%);
+                border-radius: 10px;
+            }
+        }
+
+
+
+        img {
+            position: 0 50%;
+            max-height: 70vh;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .w-auto {
+            max-width: 230px;
+        }
+    }
+
+    .btn.btn-link {
+        &:active {
+            -webkit-box-shadow: 1px 1px 2px -1px #000000;
+            box-shadow: 1px 1px 2px -1px #000000;
+
+            transition-duration: .04s;
+        }
+    }
+
+    .majorcontent.container-lg {
+        --bs-gutter-x: 0rem;
+    }
+
+    .majorcontent {
+
+        @media (min-width: 768px) {
+            border: 3px solid map-get($colors, "accent-emphasis");
+            border-radius: 10px;
+        }
+
+        .tablecontent {
+            svg:not(.bi.bi-leaf-fill) {
+                color: color.mix($dark, white, 70%);
+            }
+
+            .addbutton {
+                .row {
+                    --bs-gutter-x: 0rem;
+                }
+            }
+        }
+
+        .tablecontent.container-lg {
+            --bs-gutter-x: 0rem;
+        }
+    }
+
+    .table>:not(caption)>*>* {
+        border-color: map-get($colors, "accent");
+    }
+
+    .relationships {
+        div.d-flex {
+            min-height: 52px;
+        }
+    }
+
+    form {
+        div.modal-body {
+
+            
+            label.form-label {
+                color: $dark;
+            }
+        }
+    }
+
+    footer {
+        height: fit-content;
+        margin-top: 100px;
+        padding: 5em 5em;
+    }
+}
