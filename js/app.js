@@ -1,6 +1,8 @@
-import { createApp, computed } from "https://unpkg.com/vue@3/dist/vue.esm-browser.js";
-import * as bootstrap from '../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js';
-import { Relationship } from "./modules/relationship.js";
+import { createApp } from "https://unpkg.com/vue@3/dist/vue.esm-browser.js";
+//bare minimum imports aren't handled natively so I installed Web Dev Server
+//https://stackoverflow.com/questions/56507441/relative-references-must-start-with-either-or
+import * as bootstrap from 'bootstrap'
+import {Relationship} from "./modules/relationship";
 
 let id = 0;
 let editTarget = null;
@@ -40,6 +42,9 @@ const app = createApp({
             //     { name: 'Nails', qty: 10, purchased: false, category: 'need' },
             //     { name: 'Sliding Compound Miter Saw', qty: 1, purchased: false, category: 'want' },
             // ],
+
+            tooltips: [],
+
             people: [
                 {
                     personID: -1, isAlive: true, country: 'United States', name: "Kyle Leverence", dateOfBirth: "11/24/2004",
@@ -186,7 +191,7 @@ const app = createApp({
         addPerson: function (e) {
             if (this.checkForm(e.target)) {
                 if (editTarget == null) {
-                    newPerson.defaultPlace = this.newPerson.placeOfBirth || this.newPerson.placeOfDeath ||
+                    this.newPerson.defaultPlace = this.newPerson.placeOfBirth || this.newPerson.placeOfDeath ||
                         this.newPerson.placeOfBurial || '';
                     this.people.push(this.newPerson);
                     id++;
@@ -281,7 +286,6 @@ const app = createApp({
                     name: '',
                     relation: '',
                 }
-                console.log('im here!')
             }, 100)
         }
     },
@@ -299,20 +303,33 @@ const app = createApp({
 
     //mounted:  called after the instance has been mounted,
     mounted: function () {
-        if (localStorage.getItem('people')) {
-            this.people = JSON.parse(localStorage.getItem('people'));
-        }
+        // if (localStorage.getItem('people')) {
+        //     this.people = JSON.parse(localStorage.getItem('people'));
+        // }
 
-
+        this.tooltips = this.$refs.tooltips;
+        const popovers = this.$refs.popovers;
+        console.log(this.tooltips)
+        this.tooltips.forEach(t => new bootstrap.Tooltip(t))
+        new bootstrap.Popover(popovers)
     },
 
     // watch:   calls the function if the value changes
     // https://travishorn.com/add-localstorage-to-your-vue-app-in-2-lines-of-code-56eb2c9f371b
     watch: {
-        handler() {
-            localStorage.setItem('people', JSON.stringify(this.people))
+
+        // Promise logic
+        //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/await
+
+
+        people: {
+            async handler() {
+                await this.$nextTick();
+                console.log(this.tooltips)
+                this.$refs.tooltips.forEach(t => new bootstrap.Tooltip(t))
+            },
+            deep: true,
         },
-        deep: true,
     },
 });
 
