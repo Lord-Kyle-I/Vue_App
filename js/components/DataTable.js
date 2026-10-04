@@ -26,9 +26,8 @@ const DataTable = {
           </thead>
           <tbody>
           <tr v-for="data in tableData" :key="key">
-            <slot name="row-content"></slot>
+            <slot name="row-content" v-bind="data"></slot>
           </tr>
-
           </tbody>
         </table>
       </div>

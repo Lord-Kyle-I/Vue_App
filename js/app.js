@@ -19,7 +19,7 @@ const app = createApp({
             //     purchased: false,
             // },
 
-            newPerson: {
+            person: {
                 personID: id,
                 isAlive: false,
                 country: '',
@@ -191,12 +191,12 @@ const app = createApp({
         addPerson: function (e) {
             if (this.checkForm(e.target)) {
                 if (editTarget == null) {
-                    this.newPerson.defaultPlace = this.newPerson.placeOfBirth || this.newPerson.placeOfDeath ||
-                        this.newPerson.placeOfBurial || '';
-                    this.people.push(this.newPerson);
+                    this.person.defaultPlace = this.person.placeOfBirth || this.person.placeOfDeath ||
+                        this.person.placeOfBurial || '';
+                    this.people.push(this.person);
                     id++;
                 } else {
-                    this.people[editTarget] = this.newPerson;
+                    this.people[editTarget] = this.person;
                 }
 
 
@@ -208,7 +208,7 @@ const app = createApp({
         },
 
         addRelationship: function () {
-            this.newPerson.relationships.push(new Relationship(this.newRelationship.name, this.newRelationship.relation))
+            this.person.relationships.push(new Relationship(this.newRelationship.name, this.newRelationship.relation))
 
             //clearing form fields
             this.newRelationship = {
@@ -223,11 +223,11 @@ const app = createApp({
             editTarget = this.people.indexOf(temp);
             cachedRelationships = temp.relationships
 
-            this.populateNewPerson(temp)
+            this.populatePerson(temp)
         },
 
-        populateNewPerson: function (person) {
-            this.newPerson = {
+        populatePerson: function (person) {
+            this.person = {
                 personID: person.personID,
                 isAlive: person.isAlive,
                 country: person.country,
@@ -250,7 +250,7 @@ const app = createApp({
         },
 
         deleteRelationship: function (relationship) {
-            this.newPerson.relationships = this.newPerson.relationships.filter(r => r != relationship);
+            this.person.relationships = this.person.relationships.filter(r => r != relationship);
         },
 
         clearEditTarget() {
@@ -268,7 +268,7 @@ const app = createApp({
 
             //clearing form fields
             setTimeout(() => {
-                this.newPerson = {
+                this.person = {
                     personID: id,
                     isAlive: false,
                     country: '',
@@ -293,11 +293,11 @@ const app = createApp({
     // computed: values that are updated and cached if dependencies change
     computed: {
         //???
-        // defaultPlace() { return this.newPerson.placeOfBirth || this.newPerson.placeOfDeath ||
-        //                 this.newPerson.placeOfBurial || ''}
+        // defaultPlace() { return this.person.placeOfBirth || this.person.placeOfDeath ||
+        //                 this.person.placeOfBurial || ''}
 
         relationships() {
-            return this.newPerson.relationships
+            return this.person.relationships
         }
     },
 

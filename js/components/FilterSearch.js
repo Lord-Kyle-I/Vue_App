@@ -1,4 +1,4 @@
-const Filter = {
+const FilterSearch = {
     data: {
         values: []
     },
@@ -10,16 +10,13 @@ const Filter = {
         this.values=[this.filters.length];
     },
     template: `
-        <div v-for="(filter, i) in filters">
-            <select v-if="filter.filter === 'select'" v-model="this.values[i]">
-              
-            </select>
-            
+        <div>
+            <slot name="#filters"></slot>
         </div>
     `
     /*
     TODO
-    Filter using factories. Make different components for each type of filter instead of using a big if else
+    FilterSearch using factories. Make different components for each type of filter instead of using a big if else
     Look up dynamic components
 
     Explain filters better and stuff. Use tooltips
@@ -29,4 +26,4 @@ const Filter = {
 
 }
 
-export default Filter
+export default FilterSearch
