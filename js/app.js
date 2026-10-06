@@ -10,19 +10,6 @@ const app = createApp({
     data: function () {
         return {
 
-            person: {
-                isAlive: false,
-                country: '',
-                name: '',
-                dateOfBirth: '',
-                placeOfBirth: '',
-                dateOfDeath: '',
-                placeOfDeath: '',
-                placeOfBurial: '',
-                relationships: [],
-                defaultPlace: '',
-            },
-
             relationship: {
                 name: '',
                 relation: '',
@@ -71,12 +58,6 @@ const app = createApp({
 
         clearEditTarget() {
             editTarget = null;
-        },
-
-        checkForm(form) {
-            form.classList.add('was-validated');
-
-            return form.checkValidity();
         },
 
         clearForm() {

@@ -1,5 +1,9 @@
 const CountrySelect = {
-    props: ['modelValue'],
+    props: {
+        modelValue: {type: String},
+        id: {type: String},
+        required: {type: Boolean}
+    },
     emits: ['update:modelValue'],
     computed: {
         value: {
@@ -13,9 +17,9 @@ const CountrySelect = {
     },
 
     template: `
-        <select class="form-select" id="countrySelect" aria-label="Country select" 
-                v-model="value"
-                required>
+        <select class="form-select" :id="id" aria-label="Country select" 
+                v-model="value" 
+                :required="required">
                   <option selected disabled value="">Select a country</option>
                   <option value="Afghanistan">Afghanistan</option>
                   <option value="Albania">Albania</option>

@@ -1,54 +1,44 @@
 import DataModal from "./DataModal";
 import CountrySelect from "./CountrySelect";
+import PersonSelect from "./PersonSelect";
+import person from "../modules/person";
 
 
 const AddEditModal = {
     data() {
         return {
-            formData: {
-                isAlive: false,
-                country: '',
-                name: '',
-                dateOfBirth: '',
-                placeOfBirth: '',
-                dateOfDeath: '',
-                placeOfDeath: '',
-                placeOfBurial: '',
-                relationships: [],
-                defaultPlace: '',
-            }
+            formData: person()
         }
     },
     props: {
         person: {type: Object}
     },
     methods: {
-        clearTable: function() {
-            this.formData = {
-                isAlive: false,
-                country: '',
-                name: '',
-                dateOfBirth: '',
-                placeOfBirth: '',
-                dateOfDeath: '',
-                placeOfDeath: '',
-                placeOfBurial: '',
-                relationships: [],
-                defaultPlace: '',
+        clearForm: function() {
+            Object.assign(this.formData, person())
+        },
+        save: function() {
+            Object.assign(this.person, this.formData)
+            close()
+        },
+        open: function() {
+            if(this.person) {
+                Object.assign(this.formData, this.person)
             }
-        }
-    },
-    mounted: function(){
-        if(person) {
-            Object.assign(formData, person)
+            this.$refs.modal.open()
+        },
+        close: function() {
+            this.clearForm()
+            this.$refs.modal.close()
         }
     },
     components: {
         DataModal,
-        CountrySelect
+        CountrySelect,
+        PersonSelect,
     },
     template: `
-        <data-modal :title="!person ? 'Edit Person' : 'Add Person'" edit @form-submit="()" @form-close="">
+        <data-modal class="" ref="modal" :title="person ? 'Edit Person' : 'Add Person'" edit @form-submit="save" @modal-close="close">
           <template>
             <div class="mb-4 border-bottom">
               <h2 class="fs-5 fw-medium mb-3">Information</h2>
@@ -62,14 +52,14 @@ const AddEditModal = {
               </div>
               <div class="form-check mb-3">
                 <input class="form-check-input" type="checkbox" id="checkAlive" value=""
-                       v-model="person.isAlive">
+                       v-model="formData.isAlive">
                 <label class="form-check-label text-dark" for="checkAlive">
                   This person is alive
                 </label>
               </div>
               <div class="mb-3">
                 <label for="countrySelect" class="form-label">Select a country</label>
-                <country-select v-model="person.country"></country-select>
+                <country-select v-model="formData.country" required></country-select>
                 <div class="invalid-feedback">
                   Please select a country.
                 </div>
@@ -77,7 +67,7 @@ const AddEditModal = {
               <div class="mb-3">
                 <label for="nameInput" class="form-label">Name</label>
                 <input type="text" class="form-control" id="nameInput" placeholder="Enter full name"
-                       v-model="person.name" required>
+                       v-model="formData.name" required>
                 <div class="invalid-feedback">
                   Please enter a name.
                 </div>
@@ -85,7 +75,7 @@ const AddEditModal = {
               <div class="mb-3">
                 <label for="birthdayInput" class="form-label">Date of birth</label>
                 <input type="text" class="form-control" id="birthdayInput" placeholder="mm/dd/yyyy"
-                       v-model="newPerson.dateOfBirth"
+                       v-model="formData.dateOfBirth"
                        pattern="^(0\\d|1[12])\\/(0\\d|1\\d|2\\d|3[01])\\/(19|20)\\d\\d$">
                 <div class="invalid-feedback">
                   Please enter a date in dd/mm/yyyy format.
@@ -94,12 +84,12 @@ const AddEditModal = {
               <div class="mb-3">
                 <label for="birthplaceInput" class="form-label">Place of birth</label>
                 <input type="text" class="form-control" id="birthplaceInput"
-                       placeholder="Enter location" v-model="person.placeOfBirth">
+                       placeholder="Enter location" v-model="formData.placeOfBirth">
               </div>
               <div class="mb-3">
                 <label for="deathdayInput" class="form-label">Date of death</label>
                 <input type="text" class="form-control" id="deathdayInput" placeholder="mm/dd/yyyy"
-                       v-model="person.dateOfDeath"
+                       v-model="formData.dateOfDeath"
                        pattern="^(0\\d|1[12])\\/(0\\d|1\\d|2\\d|3[01])\\/(19|20)\\d\\d$">
                 <div class="invalid-feedback">
                   Please enter a date in dd/mm/yyyy format.
@@ -108,45 +98,25 @@ const AddEditModal = {
               <div class="mb-3">
                 <label for="deathplaceInput" class="form-label">Place of death</label>
                 <input type="text" class="form-control" id="deathplaceInput"
-                       placeholder="Enter location" v-model="person.placeOfDeath">
+                       placeholder="Enter location" v-model="formData.placeOfDeath">
               </div>
               <div class="mb-3">
                 <label for="burialplaceInput" class="form-label">Place of burial</label>
                 <input type="text" class="form-control" id="burialplaceInput"
-                       placeholder="Enter location" v-model="person.placeOfBurial">
+                       placeholder="Enter location" v-model="formData.placeOfBurial">
               </div>
             </div>
             <div>
               <h2 class="fs-5 fw-medium mb-3">Relationships</h2>
               <div class="d-flex gap-1">
                 <div>
-                  <label for="relationInput" class="form-label">Name</label>
-                  <input type="text" class="form-control dont-validate" id="relationInput"
-                         placeholder="Enter name" v-model="person.name">
+                  <label for="relationshipNameInput" class="form-label">Name</label>
+                  <input type="text" class="form-control dont-validate" id="relationshipNameInput"
+                         placeholder="Enter name" v-model="formData.relationshipName">
                 </div>
                 <div>
-                  <label class="form-label">Relationship</label>
-                  <select class="form-select dont-validate" aria-label="Relationship dropdown"
-                          v-model="person.relation">
-                    <option selected disabled value="">Choose a relationship</option>
-
-                    <option value="Spouse">Spouse</option>
-
-                    <option value="Father">Father</option>
-                    <option value="Mother">Mother</option>
-
-                    <option value="Son">Son</option>
-                    <option value="Daughter">Daughter</option>
-
-                    <option value="Brother">Brother</option>
-                    <option value="Sister">Sister</option>
-
-                    <option value="Grandfather">Grandfather</option>
-                    <option value="Grandmother">Grandmother</option>
-
-                    <option value="Grandson">Grandson</option>
-                    <option value="Granddaughter">Granddaughter</option>
-                  </select>
+                  <label class="form-label" for="relationsShipSelect">Relationship</label>
+                  <person-select id="relationShipSelect" v-model="formData.relationshipType"></person-select>
                 </div>
                 <button type="button" class="btn btn-link p-0 align-self-end ms-auto"
                         @click="addRelationship">
@@ -175,18 +145,6 @@ const AddEditModal = {
                   </svg>
                 </button>
               </div>
-              <!-- <div class="d-flex">
-                  <span class="align-self-center overflow-hidden text-nowrap">Spouse—Beth
-                      Leverence</span>
-                  <button type="button" class="btn btn-link ms-auto"><svg
-                          xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                          fill="currentColor" class="bi bi-trash-fill text-danger"
-                          viewBox="0 0 16 16">
-                          <path
-                              d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0" />
-                      </svg>
-                  </button>
-              </div> -->
             </div>
           </template>
         </data-modal>
