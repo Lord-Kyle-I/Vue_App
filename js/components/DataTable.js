@@ -7,7 +7,6 @@ const DataTable = {
     props: {
         tableData: {type: Array, required: true},
         sorts: {type: Array, required: true},
-        key: {type: Object, required: true}
     },
     computed: {
         setList: function(list) {
@@ -26,7 +25,7 @@ const DataTable = {
           </thead>
           <tbody>
           <tr v-for="data in tableData" :key="key">
-            <slot name="row-content" v-bind="data"></slot>
+            <slot name="row-content" :data="data"></slot>
           </tr>
           </tbody>
         </table>

@@ -1,18 +1,13 @@
+let counter = 0
 const FilterSearch = {
-    data: {
-        values: []
+    data() {
+        return {
+            id: 'filter' + counter++
+        }
     },
-    props: {
-        filters: {type: Array, required: true},
-        ref: {type: String, required: true},
-    },
-    mounted: function() {
-        this.values=[this.filters.length];
-    },
+
     template: `
-        <div>
-            <slot name="#filters"></slot>
-        </div>
+        <div v-for="filter in filters" :key="filter."></div>
     `
     /*
     TODO

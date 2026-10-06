@@ -1,8 +1,11 @@
+let id=0
+
 export class Relationship {
     constructor(name, relation, link=null) {
-        this.name = name;
-        this.relation = relation;
-        this.link = link;
+        this.id = id++
+        this.name = name
+        this.relation = relation
+        this.link = link
     }
 
     toString() {
