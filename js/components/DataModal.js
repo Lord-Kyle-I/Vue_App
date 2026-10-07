@@ -17,7 +17,7 @@ const DataModal = {
         },
         checkForm: function() {
             this.$refs.form.classList.add('was-validated')
-            this.$refs.form.checkValidity()
+            return this.$refs.form.checkValidity()
         },
     },
     mounted: function() {
@@ -32,11 +32,11 @@ const DataModal = {
         <div class="modal fade" ref="modal" tabindex="-1" :aria-labelledby="id" aria-hidden="true">
             <div class="modal-dialog">
               <div class="modal-content">
-                <form class="needs-validation" ref="form" v-if="edit" @submit.prevent="$emit('form-submit'); checkForm" novalidate>
+                <form class="needs-validation" ref="form" v-if="edit" @submit.prevent="$emit('form-submit',checkForm(), $refs.form)" novalidate>
                   <div class="modal-header">
                     <slot name="header">
                       <h1 class="modal-title fs-5" :id="id">{{ title }}</h1>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                      <button type="button" class="btn-close" aria-label="Close"
                               @click="$emit('modal-close')"></button>
                     </slot>
                   </div>
@@ -44,7 +44,7 @@ const DataModal = {
                     <slot></slot>
                   </div>
                   <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                    <button type="button" class="btn btn-secondary"
                             @click="$emit('modal-close')">Close
                     </button>
                     <button type="submit" class="btn btn-primary">Save changes</button>
@@ -54,7 +54,7 @@ const DataModal = {
                   <div class="modal-header">
                     <slot name="header">
                       <h1 class="modal-title fs-5" :id="id">{{ title }}</h1>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                      <button type="button" class="btn-close" aria-label="Close"
                               @click="$emit('modal-close')"></button>
                     </slot>
                   </div>
@@ -62,7 +62,7 @@ const DataModal = {
                     <slot></slot>
                   </div>
                   <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                    <button type="button" class="btn btn-secondary"
                             @click="$emit('modal-close')">Close
                     </button>
                   </div>

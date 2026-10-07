@@ -2,9 +2,8 @@ import { createApp } from "https://unpkg.com/vue@3/dist/vue.esm-browser.js";
 //bare minimum imports aren't handled natively so I installed Web Dev Server
 //https://stackoverflow.com/questions/56507441/relative-references-must-start-with-either-or
 import * as bootstrap from 'bootstrap'
-import {Relationship} from "./modules/relationship";
+import Relationship from "./modules/relationship";
 import PersonTable from "./components/PersonTable";
-import person from "./modules/person";
 
 
 const app = createApp({
@@ -25,7 +24,18 @@ const app = createApp({
             tooltips: [],
 
             people: [
-                person()
+                {
+                    isAlive: false,
+                    country: '',
+                    name: '',
+                    dateOfBirth: '',
+                    placeOfBirth: '',
+                    dateOfDeath: '',
+                    placeOfDeath: '',
+                    placeOfBurial: '',
+                    relationships: [],
+                    defaultPlace: '',
+                }
             ],
         };
     },
@@ -36,10 +46,6 @@ const app = createApp({
         //add and edit function 
         addPerson: function (person) {
             this.people.push(person)
-        },
-
-        editPerson: function (person) {
-            const indexToRemove = this.people.find(p => p === person);
         },
 
         deletePerson: function (person) {
@@ -66,11 +72,9 @@ const app = createApp({
     //mounted:  called after the instance has been mounted,
     mounted: function () {
 
-        // this.tooltips = this.$refs.tooltips;
-        // const popovers = this.$refs.popovers;
-        // console.log(this.tooltips)
-        // this.tooltips.forEach(t => new bootstrap.Tooltip(t))
-        // new bootstrap.Popover(popovers)
+        const popovers = this.$refs.popovers;
+        this.tooltips.forEach(t => new bootstrap.Tooltip(t))
+        new bootstrap.Popover(popovers)
     },
 
     // watch:   calls the function if the value changes

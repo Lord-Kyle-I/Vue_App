@@ -8,13 +8,9 @@ const DetailsModal = {
     },
     methods: {
         open: function() {
-            if(this.person) {
-                Object.assign(this.formData, this.person)
-            }
             this.$refs.modal.open()
         },
         close: function() {
-            this.clearForm()
             this.$refs.modal.close()
         }
     },
@@ -23,10 +19,10 @@ const DetailsModal = {
         AddEditModal,
     },
     template: `
-        <data-modal class="" ref="modal" :title="!person ? 'Edit Person' : 'Add Person'"  @modal-close="close">
+        <data-modal class="" ref="modal" :title="person.name"  @modal-close="close">
           <template #header>
             <h1 class="modal-title fs-5" id="detailsModalLabel">{{ person.name }}</h1>
-            <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#personModal"
+            <button type="button" class="btn btn-link" 
                     @click="$refs.addEditModal.open()">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                    class="bi bi-pencil-square" viewBox="0 0 16 16">
@@ -37,7 +33,7 @@ const DetailsModal = {
               </svg>
               <add-edit-modal ref="addEditModal" :person="person"></add-edit-modal>
             </button>
-            <button type="button" class="btn-close" data-bs-dismiss="modal"
+            <button type="button" class="btn-close"
                     aria-label="Close" @click="close()"></button>
           </template>
           <template #default>

@@ -1,13 +1,30 @@
 import DataModal from "./DataModal";
 import CountrySelect from "./CountrySelect";
 import RelationshipSelect from "./RelationshipSelect";
-import person from "../modules/person";
 
+function emptyPerson() {
+    return {
+        isAlive: false,
+        country: '',
+        name: '',
+        dateOfBirth: '',
+        placeOfBirth: '',
+        dateOfDeath: '',
+        placeOfDeath: '',
+        placeOfBurial: '',
+        relationships: [],
+        defaultPlace: '',
+    }
+}
 
 const AddEditModal = {
     data() {
         return {
-            formData: person()
+            formData: emptyPerson(),
+            relationshipData: {
+                relationshipName: '',
+                relationshipType: ''
+            }
         }
     },
     props: {
@@ -15,15 +32,23 @@ const AddEditModal = {
     },
     methods: {
         clearForm: function() {
-            Object.assign(this.formData, person())
-        },
-        save: function() {
-            if(this.person) {
-                Object.assign(this.person, this.formData)
-            } else {
-                this.$emit('add-person', this.formData)
+            this.formData = emptyPerson()
+            this.relationshipData = {
+                relationshipName: '',
+                relationshipType: ''
             }
-            close()
+        },
+        save: function(isValid, ref) {
+            if(isValid) {
+                if(this.person) {
+                    Object.assign(this.person, this.formData)
+                } else {
+                    const newPerson = Object.assign({}, this.formData)
+                    this.$emit('add-person', newPerson)
+                }
+                ref.classList.remove('was-validated')
+                this.close()
+            }
         },
         open: function() {
             if(this.person) {
@@ -116,11 +141,11 @@ const AddEditModal = {
                 <div>
                   <label for="relationshipNameInput" class="form-label">Name</label>
                   <input type="text" class="form-control dont-validate" id="relationshipNameInput"
-                         placeholder="Enter name" v-model="formData.relationshipName">
+                         placeholder="Enter name" v-model="relationshipData.relationshipName">
                 </div>
                 <div>
                   <label class="form-label" for="relationshipSelect">Relationship</label>
-                  <relationship-select id="relationshipSelect" v-model="formData.relationshipType"></relationship-select>
+                  <relationship-select id="relationshipSelect" v-model="relationshipData.relationshipType"></relationship-select>
                 </div>
                 <button type="button" class="btn btn-link p-0 align-self-end ms-auto"
                         @click="addRelationship">
@@ -135,7 +160,7 @@ const AddEditModal = {
               </div>
             </div>
             <div class="p-1 mt-3">
-              <div class="d-flex" v-for="relationship in person.relationships" :key="relationship.id">
+              <div class="d-flex" v-for="relationship in formData.relationships" :key="relationship.id">
                                     <span
                                         class="align-self-center overflow-hidden text-nowrap">{{ relationship.relation }}
                                       —{{ relationship.name }}</span>

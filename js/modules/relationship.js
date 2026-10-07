@@ -1,6 +1,6 @@
 let id=0
 
-export class Relationship {
+class Relationship {
     constructor(name, relation, link=null) {
         this.id = id++
         this.name = name
@@ -12,3 +12,5 @@ export class Relationship {
         return `${this.name} + " " + ${this.relation}`
     }
 }
+
+export default Relationship

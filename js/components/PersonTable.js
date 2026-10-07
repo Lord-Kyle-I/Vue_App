@@ -2,6 +2,7 @@ import DataTable from "./DataTable";
 import PersonRow from "./PersonRow";
 import CountrySelect from "./CountrySelect";
 import OffcanvasFilter from "./OffcanvasFilter";
+import AddEditModal from "./AddEditModal";
 
 const PersonTable= {
     data() {
@@ -33,7 +34,7 @@ const PersonTable= {
         },
         addPerson(person) {
             this.$emit('add-person', person)
-        }
+        },
     },
     watch: {
         filters: {
@@ -45,6 +46,7 @@ const PersonTable= {
     components: {
         DataTable,
         PersonRow,
+        AddEditModal,
         CountrySelect,
         OffcanvasFilter,
     },
@@ -111,8 +113,9 @@ const PersonTable= {
         </data-table>
         <div class="addbutton">
           <div class="row me-1 ms-1">
-            <button type="button" class="btn btn-primary" @add-person="addPerson">
+            <button type="button" class="btn btn-primary" @click="$refs.modal.open()">
               Add a new person
+              <add-edit-modal ref="modal" @add-person="addPerson"></add-edit-modal>
             </button>
           </div>
         </div>
