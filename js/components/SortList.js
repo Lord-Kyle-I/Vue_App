@@ -3,17 +3,24 @@ const SortList = {
     components: {
         Sort,
     },
+    methods: {
+      reset() {
+        this.$refs.sorts.clicked = false
+      },
+      changeSort(name, sortWay) {
+          this.reset()
+          const target = this.$refs.sorts.find(s => s.name === name)
+          this.$refs.sorts.indexOf(target).clicked = true
+          this.$emit('sort', sortWay)
+      }
+    },
     props: {
         sorts: {type: Array, required: true},
         dataList: {type: Array, required: true},
     },
-    computed: {
-        sortt(col) {
-            return this.dataList.sort((a, b) => a[col] - b[col])
-        }
-    },
     template: `
-        <sort v-for="(sort, i) in sorts" :sort-type="sort.sortType" @on-click=$emit('sort-list',sortt(i))></sort>
+        <sort ref="sorts" v-for="sort in sorts" :sort-type="sort.sortType" :name="sort.name" :key="sort.name" 
+              @on-click="changeSort"></sort>
     `
 }
 

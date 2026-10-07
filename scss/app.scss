@@ -117,7 +117,7 @@ html body {
             border-radius: 10px;
         }
 
-        .tablecontent {
+        .table-content {
             svg:not(.bi.bi-leaf-fill) {
                 color: color.mix($dark, white, 70%);
             }
@@ -129,7 +129,7 @@ html body {
             }
         }
 
-        .tablecontent.container-lg {
+        .table-content.container-lg {
             --bs-gutter-x: 0rem;
         }
     }

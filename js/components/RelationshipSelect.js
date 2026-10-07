@@ -1,4 +1,4 @@
-const CountrySelect = {
+const RelationshipSelect = {
     props: {
         modalValue: {type: String},
         id: {type: String, required: true},
@@ -41,4 +41,4 @@ const CountrySelect = {
     `
 }
 
-export default CountrySelect
+export default RelationshipSelect

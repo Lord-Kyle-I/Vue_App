@@ -1,6 +1,6 @@
 import DataModal from "./DataModal";
 import CountrySelect from "./CountrySelect";
-import PersonSelect from "./PersonSelect";
+import PersonSelect from "./RelationshipSelect";
 import person from "../modules/person";
 
 
@@ -18,7 +18,11 @@ const AddEditModal = {
             Object.assign(this.formData, person())
         },
         save: function() {
-            Object.assign(this.person, this.formData)
+            if(this.person) {
+                Object.assign(this.person, this.formData)
+            } else {
+                this.$emit('add-person', this.formData)
+            }
             close()
         },
         open: function() {
@@ -147,6 +151,7 @@ const AddEditModal = {
               </div>
             </div>
           </template>
+          <slot></slot>
         </data-modal>
 
     `
