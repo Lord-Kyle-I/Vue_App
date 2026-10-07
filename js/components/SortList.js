@@ -20,7 +20,7 @@ const SortList = {
     },
     template: `
         <sort ref="sorts" v-for="sort in sorts" :sort-type="sort.sortType" :name="sort.name" :key="sort.name" 
-              @on-click="changeSort"></sort>
+              :class="sort.customClasses" @on-click="changeSort"></sort>
     `
 }
 

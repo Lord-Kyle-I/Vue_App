@@ -1,6 +1,6 @@
 import DataModal from "./DataModal";
 import CountrySelect from "./CountrySelect";
-import PersonSelect from "./RelationshipSelect";
+import RelationshipSelect from "./RelationshipSelect";
 import person from "../modules/person";
 
 
@@ -39,11 +39,11 @@ const AddEditModal = {
     components: {
         DataModal,
         CountrySelect,
-        PersonSelect,
+        RelationshipSelect,
     },
     template: `
         <data-modal class="" ref="modal" :title="person ? 'Edit Person' : 'Add Person'" edit @form-submit="save" @modal-close="close">
-          <template>
+          <template #default>
             <div class="mb-4 border-bottom">
               <h2 class="fs-5 fw-medium mb-3">Information</h2>
               <div
@@ -63,7 +63,7 @@ const AddEditModal = {
               </div>
               <div class="mb-3">
                 <label for="countrySelect" class="form-label">Select a country</label>
-                <country-select v-model="formData.country" required></country-select>
+                <country-select v-model="formData.country" id="countrySelect" required></country-select>
                 <div class="invalid-feedback">
                   Please select a country.
                 </div>
@@ -119,8 +119,8 @@ const AddEditModal = {
                          placeholder="Enter name" v-model="formData.relationshipName">
                 </div>
                 <div>
-                  <label class="form-label" for="relationsShipSelect">Relationship</label>
-                  <person-select id="relationShipSelect" v-model="formData.relationshipType"></person-select>
+                  <label class="form-label" for="relationshipSelect">Relationship</label>
+                  <relationship-select id="relationshipSelect" v-model="formData.relationshipType"></relationship-select>
                 </div>
                 <button type="button" class="btn btn-link p-0 align-self-end ms-auto"
                         @click="addRelationship">
@@ -151,7 +151,6 @@ const AddEditModal = {
               </div>
             </div>
           </template>
-          <slot></slot>
         </data-modal>
 
     `

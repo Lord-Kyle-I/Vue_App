@@ -1,7 +1,7 @@
 const RelationshipSelect = {
     props: {
         modalValue: {type: String},
-        id: {type: String, required: true},
+        id: {type: String},
         required: {type: Boolean}
     },
     emits: ['update:modelValue'],
@@ -18,7 +18,7 @@ const RelationshipSelect = {
 
     template: `
       <select class="form-select" aria-label="Relationship dropdown"
-              v-model="value" :required="required">
+              v-model="value" :required="required" :id="id">
         <option selected disabled value="">Choose a relationship</option>
 
         <option value="Spouse">Spouse</option>

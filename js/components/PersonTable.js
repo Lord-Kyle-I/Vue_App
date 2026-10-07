@@ -15,9 +15,9 @@ const PersonTable= {
 
             sorts: [
                 {name: 'Name', sortType: 'alphabetical'},
-                {name: 'Birth Date', sortType: 'date'},
-                {name: 'Death Date', sortType: 'date'},
-                {name: 'Location', sortType: 'alphabetical'},
+                {name: 'Birth Date', sortType: 'date', customClasses: ['d-none', 'd-md-table-cell']},
+                {name: 'Death Date', sortType: 'date', customClasses: ['d-none', 'd-md-table-cell']},
+                {name: 'Location', sortType: 'alphabetical', customClasses: ['d-none', 'd-md-table-cell']},
             ],
 
             content: []

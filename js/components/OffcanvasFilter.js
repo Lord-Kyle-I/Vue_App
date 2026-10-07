@@ -1,3 +1,5 @@
+import { Offcanvas } from 'bootstrap';
+
 let counter = 0
 const OffcanvasFilter = {
     data(){
@@ -8,10 +10,10 @@ const OffcanvasFilter = {
     },
     methods: {
         open() {
-            this.bsOffcanvas.open()
+            this.bsOffcanvas.show()
         },
         close() {
-            this.bsOffcanvas.close()
+            this.bsOffcanvas.hide()
         }
     },
     mounted() {

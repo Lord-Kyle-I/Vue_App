@@ -4,6 +4,7 @@ import { createApp } from "https://unpkg.com/vue@3/dist/vue.esm-browser.js";
 import * as bootstrap from 'bootstrap'
 import {Relationship} from "./modules/relationship";
 import PersonTable from "./components/PersonTable";
+import person from "./modules/person";
 
 
 const app = createApp({
@@ -23,7 +24,9 @@ const app = createApp({
 
             tooltips: [],
 
-            people: [],
+            people: [
+                person()
+            ],
         };
     },
 
@@ -63,11 +66,11 @@ const app = createApp({
     //mounted:  called after the instance has been mounted,
     mounted: function () {
 
-        this.tooltips = this.$refs.tooltips;
-        const popovers = this.$refs.popovers;
-        console.log(this.tooltips)
-        this.tooltips.forEach(t => new bootstrap.Tooltip(t))
-        new bootstrap.Popover(popovers)
+        // this.tooltips = this.$refs.tooltips;
+        // const popovers = this.$refs.popovers;
+        // console.log(this.tooltips)
+        // this.tooltips.forEach(t => new bootstrap.Tooltip(t))
+        // new bootstrap.Popover(popovers)
     },
 
     // watch:   calls the function if the value changes

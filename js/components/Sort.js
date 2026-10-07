@@ -113,8 +113,7 @@ const Sort= {
         }
     },
     template: `
-      <tr>
-        <th scope="col">{{ name }}
+        <th>{{ name }}
           <button type="button" class="p-1 mb-1 btn btn-link text-secondary" :class="{clicked : 'clicked-filter'}"
                   v-html="sortImg" @click="filterClick()"></button>
         </th>

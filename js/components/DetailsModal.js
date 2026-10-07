@@ -4,7 +4,7 @@ import AddEditModal from "./AddEditModal";
 
 const DetailsModal = {
     props: {
-        person: {type: Object}
+        person: {type: Object, required:true}
     },
     methods: {
         open: function() {
