@@ -26,15 +26,51 @@ const app = createApp({
             people: [
                 {
                     isAlive: false,
-                    country: '',
-                    name: '',
-                    dateOfBirth: '',
-                    placeOfBirth: '',
-                    dateOfDeath: '',
-                    placeOfDeath: '',
-                    placeOfBurial: '',
+                    country: 'Germany',
+                    name: 'Albert Einstein',
+                    dateOfBirth: '03/14/1879',
+                    placeOfBirth: 'Ulm, Württemberg, Germany',
+                    dateOfDeath: '04/18/1955',
+                    placeOfDeath: 'Princeton, New Jersey, USA',
+                    placeOfBurial: 'Cremated; ashes scattered (undisclosed location, reportedly Delaware River area)',
                     relationships: [],
-                    defaultPlace: '',
+                    defaultPlace: 'Princeton, New Jersey, USA',
+                },
+                {
+                    isAlive: false,
+                    country: 'United States',
+                    name: 'Abraham Lincoln',
+                    dateOfBirth: '02/12/1809',
+                    placeOfBirth: 'Near Hodgenville, Kentucky, USA',
+                    dateOfDeath: '04/15/1865',
+                    placeOfDeath: 'Washington, D.C., USA',
+                    placeOfBurial: 'Oak Ridge Cemetery, Springfield, Illinois, USA',
+                    relationships: [],
+                    defaultPlace: 'Springfield, Illinois, USA',
+                },
+                {
+                    isAlive: false,
+                    country: 'Poland / France',
+                    name: 'Marie Curie',
+                    dateOfBirth: '11/07/1867',
+                    placeOfBirth: 'Warsaw, Congress Poland (Russian Empire)',
+                    dateOfDeath: '07/04/1934',
+                    placeOfDeath: 'Passy (near Sallanches), Haute-Savoie, France',
+                    placeOfBurial: 'Panthéon, Paris, France',
+                    relationships: [],
+                    defaultPlace: 'Paris, France',
+                },
+                {
+                    isAlive: false,
+                    country: 'Italy',
+                    name: 'Leonardo da Vinci',
+                    dateOfBirth: '04/15/1452',
+                    placeOfBirth: 'Anchiano (near Vinci), Republic of Florence, Italy',
+                    dateOfDeath: '05/02/1519',
+                    placeOfDeath: 'Clos-Lucé, Amboise, France',
+                    placeOfBurial: 'Chapel of Saint-Hubert, Château d\'Amboise, France',
+                    relationships: [],
+                    defaultPlace: 'Florence / Vinci, Italy',
                 }
             ],
         };
@@ -72,23 +108,13 @@ const app = createApp({
     //mounted:  called after the instance has been mounted,
     mounted: function () {
 
-        const popovers = this.$refs.popovers;
-        this.tooltips.forEach(t => new bootstrap.Tooltip(t))
-        new bootstrap.Popover(popovers)
     },
 
     // watch:   calls the function if the value changes
     // https://travishorn.com/add-localstorage-to-your-vue-app-in-2-lines-of-code-56eb2c9f371b
     watch: {
 
-        people: {
-            async handler() {
-                await this.$nextTick();
-                console.log(this.tooltips)
-                this.$refs.tooltips.forEach(t => new bootstrap.Tooltip(t))
-            },
-            deep: true,
-        },
+
     },
 });
 

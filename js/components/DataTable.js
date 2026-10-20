@@ -10,8 +10,12 @@ const DataTable = {
         customClasses: {type: Array}
     },
     methods: {
-        sortedList(sortWay) {
-            this.$emit('update-list',this.dataList.sort(sortWay))
+        sortList(sortWay) {
+            if(sortWay !== null) {
+                this.$emit('update-list', sortWay)
+            } else {
+                this.$emit('update-list', null)
+            }
         }
     },
     template: `
@@ -22,12 +26,12 @@ const DataTable = {
           <table class="table">
             <thead class="text-nowrap">
             <tr>
-              <sort-list :data-list="tableData" :sorts="sorts" @sort="$emit('update-list', sortedList)"></sort-list>
+              <sort-list :sorts="sorts" @sort="sortList"></sort-list>
               <th scope="col"><span class="visually-hidden">Actions</span></th>
             </tr>
             </thead>
             <tbody>
-            <tr v-for="data in tableData" :key="key">
+            <tr v-for="data in tableData" :key="JSON.stringify(data)">
               <slot name="row-content" :data="data"></slot>
             </tr>
             </tbody>

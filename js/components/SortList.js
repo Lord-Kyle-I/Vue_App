@@ -4,23 +4,27 @@ const SortList = {
         Sort,
     },
     methods: {
-      reset() {
-        this.$refs.sorts.clicked = false
-      },
       changeSort(name, sortWay) {
-          this.reset()
           const target = this.$refs.sorts.find(s => s.name === name)
-          this.$refs.sorts.indexOf(target).clicked = true
-          this.$emit('sort', sortWay)
+          this.$refs.sorts.forEach(s => {
+              if(s !== target) {
+                  s.reset()
+              }
+          })
+          target.filterClick()
+          if(target.clicks !== 0) {
+              this.$emit('sort', sortWay)
+          } else {
+              this.$emit('sort', null)
+          }
       }
     },
     props: {
         sorts: {type: Array, required: true},
-        dataList: {type: Array, required: true},
     },
     template: `
         <sort ref="sorts" v-for="sort in sorts" :sort-type="sort.sortType" :name="sort.name" :key="sort.name" 
-              :class="sort.customClasses" @on-click="changeSort"></sort>
+              :class="sort.customClasses" @on-click="changeSort" :property="sort.property"></sort>
     `
 }
 

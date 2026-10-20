@@ -15,10 +15,10 @@ const PersonTable= {
             },
 
             sorts: [
-                {name: 'Name', sortType: 'alphabetical'},
-                {name: 'Birth Date', sortType: 'date', customClasses: ['d-none', 'd-md-table-cell']},
-                {name: 'Death Date', sortType: 'date', customClasses: ['d-none', 'd-md-table-cell']},
-                {name: 'Location', sortType: 'alphabetical', customClasses: ['d-none', 'd-md-table-cell']},
+                {name: 'Name', sortType: 'alphabetical', property: 'name'},
+                {name: 'Birth Date', sortType: 'date', customClasses: ['d-none', 'd-md-table-cell'], property: 'dateOfBirth'},
+                {name: 'Death Date', sortType: 'date', customClasses: ['d-none', 'd-md-table-cell'], property: 'dateOfDeath'},
+                {name: 'Location', sortType: 'alphabetical', customClasses: ['d-none', 'd-md-table-cell'], property: 'defaultPlace'},
             ],
 
             content: []
@@ -27,21 +27,25 @@ const PersonTable= {
     props: {
         people: {type: Array, required: true}
     },
+    computed: {
+        filteredList() {
+            // return this.content.filter(a => (a.country === this.filters.country) &&
+            //     (a.completeEntry === this.filters.completeEntry) && (a.living === this.filters.living))
+            return this.content
+        }
+        //TODO:SEARCHFILTER
+    },
     methods: {
-        updateAndFilter(list) {
-            this.content = list.filter(a => (a.country === this.filters.country) &&
-                (a.completeEntry === this.filters.completeEntry) && (a.living === this.filters.living)) //TODO:SEARCHFILTER
+        sortPeople(sortWay) {
+            if(sortWay !== null) {
+                this.content.sort(sortWay)
+            } else {
+                Object.assign(this.content, this.people)
+            }
         },
         addPerson(person) {
             this.$emit('add-person', person)
         },
-    },
-    watch: {
-        filters: {
-            handler() {
-                this.updateAndFilter(this.content)
-            }
-        }
     },
     components: {
         DataTable,
@@ -55,7 +59,7 @@ const PersonTable= {
     },
     template: `
       <div>
-        <data-table ref="table" :sorts="sorts" @update-list="updateAndFilter" :table-data="people" :custom-classes="['table-content', 'container-lg']">
+        <data-table ref="table" :sorts="sorts" @update-list="sortPeople" :table-data="filteredList" :custom-classes="['table-content', 'container-lg']">
             <template #filters>
               <div class="container">
                 <div class="d-flex justify-content-between pb-lg-4 pb-2 filter">

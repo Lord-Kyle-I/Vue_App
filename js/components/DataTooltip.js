@@ -6,6 +6,7 @@ const DataTooltip = {
         placement: {type: String, required: true}
     },
     mounted() {
+        console.log('here')
         const bsTooltip = new Tooltip(this.$refs.tooltip)
     },
     template: `
