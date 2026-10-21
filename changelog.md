@@ -30,7 +30,7 @@ All notable changes to this project will be documented in this file.
 
 ### Fixed
 
-- ShortDate.js issues with binding to person reference
+- `ShortDate.js` issues with binding to person reference
 - Regex issues
 - Filtering people
 - Editing people

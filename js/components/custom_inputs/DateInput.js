@@ -77,6 +77,7 @@ const DateInput = {
           }, deep: true
       }
     },
+    //TODO: Change inputs to numbers
     template: `
               <div class="form-control date" :class="this.customClass">
                 <label class="form-label">{{ name }}</label>
