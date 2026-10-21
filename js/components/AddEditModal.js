@@ -2,7 +2,7 @@ import DataModal from "./DataModal";
 import CountrySelect from "./custom_inputs/CountrySelect";
 import RelationshipSelect from "./custom_inputs/RelationshipSelect";
 import DateInput from "./custom_inputs/DateInput";
-import FamilyDate from "../modules/familyDate";
+import FamilyDate from "../modules/shortDate";
 
 function emptyPerson() {
     return {
@@ -92,7 +92,7 @@ const AddEditModal = {
               </div>
               <div class="mb-3">
                 <label for="countrySelect" class="form-label">Select a country</label>
-                <country-select v-model="formData.country" id="countrySelect" required></country-select>
+                <country-select v-model="formData.country" id="countrySelect"></country-select>
                 <div class="invalid-feedback">
                   Please select a country.
                 </div>
@@ -114,13 +114,7 @@ const AddEditModal = {
                        placeholder="Enter location" v-model="formData.placeOfBirth">
               </div>
               <div class="mb-3">
-                <label for="deathdayInput" class="form-label">Date of death</label>
-                <input type="text" class="form-control" id="deathdayInput" placeholder="mm/dd/yyyy"
-                       v-model="formData.dateOfDeath"
-                       pattern="^(0\\d|1[12])\\/(0\\d|1\\d|2\\d|3[01])\\/(19|20)\\d\\d$">
-                <div class="invalid-feedback">
-                  Please enter a date in dd/mm/yyyy format.
-                </div>
+                <date-input name="Date of death" v-model="formData.dateOfDeath"></date-input>
               </div>
               <div class="mb-3">
                 <label for="deathplaceInput" class="form-label">Place of death</label>

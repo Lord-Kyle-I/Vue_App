@@ -4,7 +4,7 @@ import { createApp } from "https://unpkg.com/vue@3/dist/vue.esm-browser.js";
 import * as bootstrap from 'bootstrap'
 import Relationship from "./modules/relationship";
 import PersonTable from "./components/PersonTable";
-import FamilyDate from "./modules/familyDate";
+import FamilyDate from "./modules/shortDate";
 
 
 const app = createApp({

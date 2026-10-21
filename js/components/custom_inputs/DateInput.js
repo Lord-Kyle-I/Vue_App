@@ -1,4 +1,4 @@
-import FamilyDate from "../../modules/familyDate";
+import FamilyDate from "../../modules/shortDate";
 
 const DateInput = {
     props: {
@@ -6,6 +6,24 @@ const DateInput = {
         modelValue: {type: FamilyDate},
     },
     emits: ['update:modelValue'],
+    methods: {
+        preventInput(event, next) {
+            if(event.key !== "Backspace") {
+                if(event.target.value.length >= 2) {
+                    event.preventDefault()
+                    next.focus()
+                }
+            }
+        },
+
+        jump(current, next) {
+            console.log(current)
+            const currentLength = current.value.toString().length
+            if(currentLength > 1) {
+                next.focus()
+            }
+        }
+    },
     computed: {
         value: {
             get() {
@@ -19,21 +37,33 @@ const DateInput = {
     template: `
               <div>
                 <label class="form-label">{{ name }}</label>
-                <div class="row align-items-center">
-                  <label for="birthdayInputMonth" class=" fw-lighter dark col">Month</label>
-                  <input type="text" class="form-control me-1 col" id="birthdayInputMonth" placeholder="mm"
-                         v-model="value.month" pattern="\d\d">
-                  <label for="birthdayInputDay" class="fw-lighter dark col">Day</label>
-                  <input type="text" class="form-control me-1 col" id="birthdayInputDay" placeholder="dd"
-                         v-model="value.day" pattern="\d\d">
-                  <label for="birthdayInputYear" class="fw-lighter dark col">Year</label>
-                  <input type="text" class="form-control col" id="birthdayInputYear" placeholder="yyyy"
-                         v-model="value.year">
-                  <teleport to="#dateFeedback" class="invalid-feedback">
-                    Please make sure months and days are in mm/dd format
-                  </teleport>
+                <div class="d-flex align-items-baseline gap-1">
+                  <div class="d-flex flex-column">
+                    <label for="birthdayInputMonth" class=" fw-lighter dark">Month</label>
+                    <input type="text" class="form-control me-1 " id="birthdayInputMonth" placeholder="mm"
+                           v-model="value.month" pattern="^\d\d$" ref="month" @keydown="preventInput($event, $refs.day)" @input="jump($refs.month, $refs.day)">
+                    <slot name="month-feedback">
+                      <div class="invalid-feedback">
+                        Please enter a month in mm format.
+                      </div>
+                    </slot>
+                  </div>
+                  <div class="d-flex flex-column">
+                    <label for="birthdayInputDay" class="fw-lighter dark">Day</label>
+                    <input type="text" class="form-control me-1 " id="birthdayInputDay" placeholder="dd"
+                           v-model="value.day" pattern="^\d\d$" ref="day" @keydown="preventInput($event, $refs.year)" @input="jump($refs.day, $refs.year)">
+                    <slot name="day-feedback">
+                      <div class="invalid-feedback">
+                        Please enter a month in dd format.
+                      </div>
+                    </slot>
+                  </div>
+                  <div class="d-flex flex-column">
+                    <label for="birthdayInputYear" class="fw-lighter dark ">Year</label>
+                    <input type="text" class="form-control " id="birthdayInputYear" placeholder="yyyy"
+                           v-model="value.year" ref="year">
+                  </div>
                 </div>
-                <div id="dateFeedback" class="invalid-feedback"></div>
               </div>
     `
 }

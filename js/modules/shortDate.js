@@ -1,4 +1,4 @@
-class FamilyDate {
+class ShortDate {
 
     constructor(month, day, year) {
         this.month = month
@@ -62,4 +62,4 @@ class FamilyDate {
     }
 }
 
-export default FamilyDate
+export default ShortDate

@@ -30,7 +30,7 @@ const PersonTable= {
     computed: {
         filteredList() {
             return this.content.filter(a => (a.country === this.filters.country || this.filters.country === '') &&
-                ((a.isFavorite && this.filters.isFavorite) || this.filters.isFavorite) && ((a.isAlive && this.filters.isAlive) || !this.filters.isAlive))
+                ((a.isFavorite && this.filters.isFavorite) || !this.filters.isFavorite) && ((a.isAlive && this.filters.isAlive) || !this.filters.isAlive))
         }
         //TODO:SEARCHFILTER
     },
