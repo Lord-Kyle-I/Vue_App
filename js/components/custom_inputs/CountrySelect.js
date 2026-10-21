@@ -20,7 +20,7 @@ const CountrySelect = {
         <select class="form-select" :id="id" aria-label="Country select" 
                 v-model="value" 
                 :required="required">
-                  <option selected disabled value="">Select a country</option>
+                  <option selected value="">None</option>
                   <option value="Afghanistan">Afghanistan</option>
                   <option value="Albania">Albania</option>
                   <option value="Algeria">Algeria</option>

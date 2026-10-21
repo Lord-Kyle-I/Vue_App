@@ -26,6 +26,7 @@ const DataTable = {
           <table class="table">
             <thead class="text-nowrap">
             <tr>
+              <th scope="col"><span class="visually-hidden">Favorites</span></th>
               <sort-list :sorts="sorts" @sort="sortList"></sort-list>
               <th scope="col"><span class="visually-hidden">Actions</span></th>
             </tr>

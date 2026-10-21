@@ -7,7 +7,7 @@ class FamilyDate {
     }
 
     isValid() {
-        if(this.month !== null && this.day !== null) {
+        if(this.month !== '' && this.day !== '') {
             if(this.month === 2) {
                 if(this.day === 28) {
                     return true
@@ -27,7 +27,7 @@ class FamilyDate {
                     return true
                 }
             }
-        } else if(this.month !== null) {
+        } else if(this.month !== '') {
             if(this.month <= 12 && this.month > 0) {
                 return true
             }
@@ -56,4 +56,10 @@ class FamilyDate {
             return 1
         }
     }
+
+    toString() {
+        return `${this.month}/${this.day}/${this.year}`
+    }
 }
+
+export default FamilyDate

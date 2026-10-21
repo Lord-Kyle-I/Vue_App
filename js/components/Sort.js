@@ -44,25 +44,21 @@ const Sort= {
             //we actually set the descending after we call this function so we must assume the opposite of intuition
             if(!this.descending) {
                 switch (this.sortType) {
+                    case 'date':
                     case 'alphabetical':
                         return (a, b) => {return a[this.property].localeCompare(b[this.property])}
                     case 'numerical':
                         return (a, b) => { return a[this.property] - b[this.property] }
-                    case 'date':
-                        //TODO: DATE COMPARISON
-                        //return (a, b) => { return Date().localeCompare(Date(b))}
                     default:
                         return
                 }
             } else {
                 switch (this.sortType) {
+                    case 'date':
                     case 'alphabetical':
                         return (a, b) => { return b[this.property].localeCompare(a[this.property])}
                     case 'numerical':
                         return (a, b) => { return b[this.property] - a[this.property]}
-                    case 'date':
-                    //TODO: DATE COMPARISON
-                    //return (a, b) => { return Date().localeCompare(Date(b))}
                     default:
                         return
                 }
@@ -71,11 +67,11 @@ const Sort= {
     },
     template: `
         <th>
-          <button type="button" class="p-1 mb-1 btn btn-link text-secondary d-flex" :class="{clicked : 'clicked-filter'}"
+          <button type="button" class="p-1 mb-1 btn btn-link d-flex gap-1"
                   @click="$emit('on-click',this.name,this.sortWay)">
             {{ name }}
-            <alphabetical-sort v-if="sortType==='alphabetical'" :descending="this.descending"></alphabetical-sort>
-            <numeric-sort v-else :descending="this.descending"></numeric-sort>
+            <alphabetical-sort v-if="sortType==='alphabetical'" :descending="this.descending" :show="clicked"></alphabetical-sort>
+            <numeric-sort v-else :descending="this.descending" :show="clicked"></numeric-sort>
           </button>
         </th>
     `,

@@ -1,15 +1,18 @@
 import DataModal from "./DataModal";
-import CountrySelect from "./CountrySelect";
-import RelationshipSelect from "./RelationshipSelect";
+import CountrySelect from "./custom_inputs/CountrySelect";
+import RelationshipSelect from "./custom_inputs/RelationshipSelect";
+import DateInput from "./custom_inputs/DateInput";
+import FamilyDate from "../modules/familyDate";
 
 function emptyPerson() {
     return {
+        isFavorite: false,
         isAlive: false,
         country: '',
         name: '',
-        dateOfBirth: '',
+        dateOfBirth: new FamilyDate('', '', ''),
         placeOfBirth: '',
-        dateOfDeath: '',
+        dateOfDeath: new FamilyDate('', '', ''),
         placeOfDeath: '',
         placeOfBurial: '',
         relationships: [],
@@ -65,6 +68,7 @@ const AddEditModal = {
         DataModal,
         CountrySelect,
         RelationshipSelect,
+        DateInput,
     },
     template: `
         <data-modal class="" ref="modal" :title="person ? 'Edit Person' : 'Add Person'" edit @form-submit="save" @modal-close="close">
@@ -102,13 +106,7 @@ const AddEditModal = {
                 </div>
               </div>
               <div class="mb-3">
-                <label for="birthdayInput" class="form-label">Date of birth</label>
-                <input type="text" class="form-control" id="birthdayInput" placeholder="mm/dd/yyyy"
-                       v-model="formData.dateOfBirth"
-                       pattern="^(0\\d|1[12])\\/(0\\d|1\\d|2\\d|3[01])\\/(19|20)\\d\\d$">
-                <div class="invalid-feedback">
-                  Please enter a date in dd/mm/yyyy format.
-                </div>
+                <date-input name="Date of birth" v-model="formData.dateOfBirth"></date-input>
               </div>
               <div class="mb-3">
                 <label for="birthplaceInput" class="form-label">Place of birth</label>

@@ -1,6 +1,7 @@
 const AlphabeticalSort = {
     props: {
-      descending: {type: Boolean, required: true}
+      descending: {type: Boolean, required: true},
+      show: {type: Boolean}
     },
     computed: {
         sortIcon() {
@@ -22,7 +23,7 @@ const AlphabeticalSort = {
         }
     },
     template: `
-        <div v-html="sortIcon"></div>
+        <div v-html="sortIcon" :class="{'show' : show}"></div>
     `
 }
 

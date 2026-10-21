@@ -24,6 +24,8 @@ $theme-colors: map-merge($theme-colors, $colors);
 
 @import '../node_modules/bootstrap/scss/bootstrap.scss';
 
+
+//form stuff
 @mixin custom-valid ($hidebg) {
     transition-duration: 200ms;
     border-color: $background;
@@ -70,8 +72,28 @@ $theme-colors: map-merge($theme-colors, $colors);
     font-weight: 500;
     font-style: normal;
 }
+//end form stuff
 
 html body {
+
+    .btn {
+        div {
+            align-content: center;
+        }
+    }
+
+    .btn.favorite {
+        svg {
+            fill: color.mix(yellow, orange, 50%);
+        }
+        &:active {
+            border-color: transparent;
+            svg {
+                transition-duration: 40ms;
+                fill: yellow
+            }
+        }
+    }
 
     header {
         a.navbar-brand {
@@ -102,15 +124,15 @@ html body {
             -webkit-box-shadow: 1px 1px 2px -1px #000000;
             box-shadow: 1px 1px 2px -1px #000000;
 
-            transition-duration: .04s;
+            transition-duration: 40ms;
         }
     }
 
-    .majorcontent.container-lg {
+    .major-content.container-lg {
         --bs-gutter-x: 0rem;
     }
 
-    .majorcontent {
+    .major-content {
 
         @media (min-width: 768px) {
             border: 3px solid map-get($colors, "accent-emphasis");
@@ -118,11 +140,36 @@ html body {
         }
 
         .table-content {
-            svg:not(.bi.bi-leaf-fill) {
-                color: color.mix($dark, white, 70%);
+            thead {
+                button {
+                    color: $dark;
+                    text-decoration: none;
+                    font-weight: bold;
+                    div {
+                        display: flex;
+                        > svg {
+                            align-self: center;
+                            color: transparent;
+                        }
+                    }
+                    div.show {
+                        > svg {
+                            align-self: center;
+                            color: color.mix($dark, white, 70%);
+                        }
+                    }
+                    &:hover {
+                        div {
+                            > svg {
+                                color: color.mix($dark, white, 70%);
+                            }
+                        }
+                    }
+                }
             }
 
-            .addbutton {
+
+            .add-button {
                 .row {
                     --bs-gutter-x: 0rem;
                 }
@@ -144,13 +191,9 @@ html body {
         }
     }
 
-    form {
-        div.modal-body {
-
-            
-            label.form-label {
-                color: $dark;
-            }
+    div.modal-content {
+        label.dark, .form-label {
+            color: $dark;
         }
     }
 
