@@ -13,6 +13,7 @@ const DataModal = {
             this.bsModal.show()
         },
         close: function() {
+            this.$refs.form.classList.remove('was-validated')
             this.bsModal.hide()
         },
         checkForm: function() {
@@ -26,6 +27,7 @@ const DataModal = {
     props: {
         title: {type: String, default: ''},
         edit: {type: Boolean, default: false},
+        customInputs: {type: Array}
     },
     template: `
       <teleport to="body">
@@ -44,6 +46,9 @@ const DataModal = {
                     <slot></slot>
                   </div>
                   <div class="modal-footer">
+                    <button type="button" class="btn btn-danger"
+                            @click="$emit('delete'); console.log('hereerer1')">Delete
+                    </button>
                     <button type="button" class="btn btn-secondary"
                             @click="$emit('modal-close')">Close
                     </button>

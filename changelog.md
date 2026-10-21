@@ -21,3 +21,16 @@ All notable changes to this project will be documented in this file.
 - Basic filters
 - Cleaned up app.scss
 - Organized JS file structure
+
+## [2.5.1] - 2026-10-21
+
+### Added
+
+- Deletion of people
+
+### Fixed
+
+- ShortDate.js issues with binding to person reference
+- Regex issues
+- Filtering people
+- Editing people

@@ -2,7 +2,7 @@ import DataModal from "./DataModal";
 import CountrySelect from "./custom_inputs/CountrySelect";
 import RelationshipSelect from "./custom_inputs/RelationshipSelect";
 import DateInput from "./custom_inputs/DateInput";
-import FamilyDate from "../modules/shortDate";
+import ShortDate from "../modules/shortDate";
 
 function emptyPerson() {
     return {
@@ -10,9 +10,9 @@ function emptyPerson() {
         isAlive: false,
         country: '',
         name: '',
-        dateOfBirth: new FamilyDate('', '', ''),
+        dateOfBirth: new ShortDate('', '', ''),
         placeOfBirth: '',
-        dateOfDeath: new FamilyDate('', '', ''),
+        dateOfDeath: new ShortDate('', '', ''),
         placeOfDeath: '',
         placeOfBurial: '',
         relationships: [],
@@ -40,9 +40,11 @@ const AddEditModal = {
                 relationshipName: '',
                 relationshipType: ''
             }
+            this.clearCustomInputs(this.$refs.birthDate, this.$refs.deathDate)
         },
         save: function(isValid, ref) {
-            if(isValid) {
+            const validCustomInputs = this.customInputsAreValid(this.$refs.birthDate, this.$refs.deathDate)
+            if(isValid && validCustomInputs) {
                 if(this.person) {
                     Object.assign(this.person, this.formData)
                 } else {
@@ -56,12 +58,32 @@ const AddEditModal = {
         open: function() {
             if(this.person) {
                 Object.assign(this.formData, this.person)
+                this.formData.dateOfBirth = new ShortDate(this.person.dateOfBirth.month, this.person.dateOfBirth.day, this.person.dateOfBirth.year)
+                this.formData.dateOfDeath = new ShortDate(this.person.dateOfDeath.month, this.person.dateOfDeath.day, this.person.dateOfDeath.year)
             }
+
             this.$refs.modal.open()
         },
         close: function() {
             this.clearForm()
             this.$refs.modal.close()
+        },
+        customInputsAreValid(...customInputs) {
+            let ret = true
+            customInputs.forEach(input => {
+                if(!input.isValid) {
+                    ret = false
+                    input.validate(false)
+                } else {
+                    input.validate(true)
+                }
+            })
+            return ret
+        },
+        clearCustomInputs(...customInputs) {
+            customInputs.forEach(input => {
+                input.validate()
+            })
         }
     },
     components: {
@@ -71,7 +93,7 @@ const AddEditModal = {
         DateInput,
     },
     template: `
-        <data-modal class="" ref="modal" :title="person ? 'Edit Person' : 'Add Person'" edit @form-submit="save" @modal-close="close">
+        <data-modal class="" ref="modal" :title="person ? 'Edit Person' : 'Add Person'" edit @form-submit="save" @modal-close="close" @delete="$emit('delete-person'); close()">
           <template #default>
             <div class="mb-4 border-bottom">
               <h2 class="fs-5 fw-medium mb-3">Information</h2>
@@ -106,7 +128,7 @@ const AddEditModal = {
                 </div>
               </div>
               <div class="mb-3">
-                <date-input name="Date of birth" v-model="formData.dateOfBirth"></date-input>
+                <date-input name="Date of birth" v-model="formData.dateOfBirth" ref="birthDate"></date-input>
               </div>
               <div class="mb-3">
                 <label for="birthplaceInput" class="form-label">Place of birth</label>
@@ -114,7 +136,7 @@ const AddEditModal = {
                        placeholder="Enter location" v-model="formData.placeOfBirth">
               </div>
               <div class="mb-3">
-                <date-input name="Date of death" v-model="formData.dateOfDeath"></date-input>
+                <date-input name="Date of death" v-model="formData.dateOfDeath" ref="deathDate"></date-input>
               </div>
               <div class="mb-3">
                 <label for="deathplaceInput" class="form-label">Place of death</label>

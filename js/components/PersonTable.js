@@ -21,7 +21,9 @@ const PersonTable= {
                 {name: 'Location', sortType: 'alphabetical', customClasses: ['d-none', 'd-md-table-cell'], property: 'defaultPlace'},
             ],
 
-            content: []
+            content: [],
+
+            currentSort: null
         }
     },
     props: {
@@ -38,13 +40,22 @@ const PersonTable= {
         sortPeople(sortWay) {
             if(sortWay !== null) {
                 this.content.sort(sortWay)
+                this.currentSort = sortWay
             } else {
                 Object.assign(this.content, this.people)
             }
         },
         addPerson(person) {
+            this.content.push(person)
+            this.sortPeople(this.currentSort)
             this.$emit('add-person', person)
         },
+        deletePerson(person) {
+            console.log('hereerer2')
+            const indexToRemove = this.content.indexOf(person);
+            this.content.splice(indexToRemove, 1)
+            this.$emit('delete-person', person)
+        }
     },
     components: {
         DataTable,
@@ -61,8 +72,8 @@ const PersonTable= {
         <data-table ref="table" :sorts="sorts" @update-list="sortPeople" :table-data="filteredList"
                     :custom-classes="['table-content', 'container-lg']">
           <template #filters>
-            <div class="container">
-              <div class="d-flex justify-content-between pb-lg-4 pb-2 filter">
+            <div class="pe-3 ps-3">
+              <div class="d-flex justify-content-between pb-lg-4 pb-2 filter w-100">
                 <country-select ref="filter" class="w-auto overflow-x-auto" v-model="filters.country"></country-select>
                 <div class="form-check d-none d-md-flex align-items-center gap-1 flex-nowrap ms-1">
                   <input class="form-check-input align-self" type="checkbox" value=""
@@ -112,7 +123,7 @@ const PersonTable= {
             </div>
           </template>
           <template #row-content="{ data }">
-            <person-row :person="data" @add-person="addPerson"></person-row>
+            <person-row :person="data" @add-person="addPerson" @delete-person="deletePerson"></person-row>
           </template>
         </data-table>
         <div class="add-button">

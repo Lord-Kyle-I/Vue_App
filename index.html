@@ -52,7 +52,7 @@
             </p>
         </div>
         <div class="pt-2 pb-2 mt-5 mb-5 major-content container-lg bg-accent">
-            <person-table :people="people" @add-person="addPerson"></person-table>
+            <person-table :people="people" @add-person="addPerson" @delete-person="deletePerson"></person-table>
         </div>
     </main>
     <footer class="bg-brand text-light">

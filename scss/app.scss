@@ -38,6 +38,8 @@ $theme-colors: map-merge($theme-colors, $colors);
 }
 
 
+
+
 .form-control, .form-check-input, .form-select {
     border-color: $accent-emphasis;
 }
@@ -195,6 +197,7 @@ html body {
         label.dark, .form-label {
             color: $dark;
         }
+
     }
 
     footer {
