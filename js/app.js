@@ -4,6 +4,7 @@ import { createApp } from "https://unpkg.com/vue@3/dist/vue.esm-browser.js";
 import * as bootstrap from 'bootstrap'
 import Relationship from "./modules/relationship";
 import PersonTable from "./components/PersonTable";
+import FamilyDate from "./modules/familyDate";
 
 
 const app = createApp({
@@ -28,9 +29,9 @@ const app = createApp({
                     isAlive: false,
                     country: 'Germany',
                     name: 'Albert Einstein',
-                    dateOfBirth: '03/14/1879',
+                    dateOfBirth: new FamilyDate(3, 14, 1879),
                     placeOfBirth: 'Ulm, Württemberg, Germany',
-                    dateOfDeath: '04/18/1955',
+                    dateOfDeath: new FamilyDate(4, 18, 1955),
                     placeOfDeath: 'Princeton, New Jersey, USA',
                     placeOfBurial: 'Cremated; ashes scattered (undisclosed location, reportedly Delaware River area)',
                     relationships: [],
@@ -40,9 +41,9 @@ const app = createApp({
                     isAlive: false,
                     country: 'United States',
                     name: 'Abraham Lincoln',
-                    dateOfBirth: '02/12/1809',
+                    dateOfBirth: new FamilyDate(2, 12, 1809),
                     placeOfBirth: 'Near Hodgenville, Kentucky, USA',
-                    dateOfDeath: '04/15/1865',
+                    dateOfDeath: new FamilyDate(4, 15, 1865),
                     placeOfDeath: 'Washington, D.C., USA',
                     placeOfBurial: 'Oak Ridge Cemetery, Springfield, Illinois, USA',
                     relationships: [],
@@ -52,9 +53,9 @@ const app = createApp({
                     isAlive: false,
                     country: 'Poland / France',
                     name: 'Marie Curie',
-                    dateOfBirth: '11/07/1867',
+                    dateOfBirth: new FamilyDate(11, 7, 1867),
                     placeOfBirth: 'Warsaw, Congress Poland (Russian Empire)',
-                    dateOfDeath: '07/04/1934',
+                    dateOfDeath: new FamilyDate(7, 4, 1934),
                     placeOfDeath: 'Passy (near Sallanches), Haute-Savoie, France',
                     placeOfBurial: 'Panthéon, Paris, France',
                     relationships: [],
@@ -64,15 +65,15 @@ const app = createApp({
                     isAlive: false,
                     country: 'Italy',
                     name: 'Leonardo da Vinci',
-                    dateOfBirth: '04/15/1452',
+                    dateOfBirth: new FamilyDate(4, 15, 1452),
                     placeOfBirth: 'Anchiano (near Vinci), Republic of Florence, Italy',
-                    dateOfDeath: '05/02/1519',
+                    dateOfDeath: new FamilyDate(5, 2, 1519),
                     placeOfDeath: 'Clos-Lucé, Amboise, France',
                     placeOfBurial: 'Chapel of Saint-Hubert, Château d\'Amboise, France',
                     relationships: [],
                     defaultPlace: 'Florence / Vinci, Italy',
                 }
-            ],
+            ]
         };
     },
 
